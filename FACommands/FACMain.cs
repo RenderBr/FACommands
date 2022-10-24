@@ -593,16 +593,16 @@ namespace FACommands
                 args.Player.SendErrorMessage("Invalid syntax: /baninfo <player>");
                 return;
             }
-            var banByName = TShock.Bans.GetBanByName(args.Parameters[0]);
+            var banByName = TShock.Bans.GetBanById(TSPlayer.FindByNameOrID(args.Parameters[0])[0].Index);
             if (banByName == null)
             {
                 args.Player.SendErrorMessage("No bans by this name were found.");
                 return;
             }
-            args.Player.SendInfoMessage($"Account name: {banByName.Name} ({banByName.IP})");
-            args.Player.SendInfoMessage($"Date banned: {banByName.Date}");
-            if (banByName.Expiration != "")
-                args.Player.SendInfoMessage($"Expiration date: {banByName.Expiration}");
+            args.Player.SendInfoMessage($"Account name: {banByName.Identifier} ");
+            args.Player.SendInfoMessage($"Date banned: {banByName.BanDateTime}");
+            if (banByName.BanDateTime != null)
+                args.Player.SendInfoMessage($"Expiration date: {banByName.BanDateTime}");
             args.Player.SendInfoMessage($"Banning user: {banByName.BanningUser}");
             args.Player.SendInfoMessage($"Reason: {banByName.Reason}");
         }
